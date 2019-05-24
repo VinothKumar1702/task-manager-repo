@@ -7,38 +7,78 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fse.taskmanager.dto.ParentTaskDto;
 import com.fse.taskmanager.dto.TaskDto;
-import com.fse.taskmanager.dto.TaskManagerResponseDto;
 import com.fse.taskmanager.entity.ParentTaskEO;
-import com.fse.taskmanager.repository.IParentTaskRepository;
+import com.fse.taskmanager.entity.TaskEO;
+import com.fse.taskmanager.repository.ITaskRepositroy;
 
+/**
+ * The Class TaskManagerDomain.
+ */
 @Component
 public class TaskManagerDomain implements ITaskManagerDomain {
 
-	@Autowired
-	private IParentTaskRepository parentTaskrepo;
 	
+	/** The task repo. */
+	@Autowired
+	private ITaskRepositroy taskRepo;
+	
+	/**
+	 * view task method.
+	 *
+	 * @return the list
+	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<TaskManagerResponseDto> viewTask() {
-		List<ParentTaskEO> parentTaskEos = parentTaskrepo.findAll();
-		List<TaskManagerResponseDto> response = new ArrayList<>();
-		parentTaskEos.stream().forEach(parent->{
-			TaskManagerResponseDto taskManagerDto = new TaskManagerResponseDto();
-			taskManagerDto.setParentTask(parent.getParentTask());
-			taskManagerDto.setParentId(parent.getParentId());
-			List<TaskDto> taskDtoList = new ArrayList<>();
-			parent.getTaskList().stream().forEach(task->{
-				TaskDto taskDto = new TaskDto();
-				taskDto.setTask(task.getTask());
-				taskDto.setTaskId(task.getTaskId());
-				taskDto.setPriority(task.getPriority());
-				taskDtoList.add(taskDto);
-			});
-			taskManagerDto.setTaskDto(taskDtoList);
-			response.add(taskManagerDto);
+	public List<TaskDto> viewTask() {
+		final List<TaskEO> taskEos = taskRepo.findAll();
+		final List<TaskDto> taskResponse = new ArrayList<>();
+		taskEos.stream().forEach(task->{
+			final TaskDto taskDto = new TaskDto();
+			taskDto.setTaskId(task.getTaskId());
+			taskDto.setTask(task.getTask());
+			taskDto.setStartDate(task.getStartDate());
+			taskDto.setEndDate(task.getEndDate());
+			taskDto.setPriority(task.getPriority());
+			if(null!=task.getParentTask()) {
+				final ParentTaskDto parentTask = new ParentTaskDto();
+				parentTask.setParentId(task.getParentTask().getParentId());
+				parentTask.setParentTask(task.getParentTask().getParentTask());
+				taskDto.setParentTask(parentTask);
+			}
+			taskResponse.add(taskDto);
 		});
-		return response;
+		return taskResponse;
+	}
+
+	/**
+	 * Adds the task.
+	 *
+	 * @param taskDto the task dto
+	 * @return the task dto
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public TaskDto addTask(final TaskDto taskDto) {
+		final TaskEO taskEo = new TaskEO();
+		taskEo.setTask(taskDto.getTask());
+		taskEo.setPriority(taskDto.getPriority());
+		taskEo.setStartDate(taskDto.getStartDate());
+		taskEo.setEndDate(taskDto.getEndDate());
+		if(null!=taskDto.getParentTask()) {
+			final ParentTaskEO parentTaskEo = new ParentTaskEO();
+			parentTaskEo.setParentTask(taskDto.getParentTask().getParentTask());
+			taskEo.setParentTask(parentTaskEo);
+		}
+		taskRepo.saveAndFlush(taskEo);
+		taskDto.setTaskId(taskEo.getTaskId());
+		if(null!=taskEo.getParentTask()) {
+			final ParentTaskDto parentTask = new ParentTaskDto();
+			parentTask.setParentId(taskEo.getParentTask().getParentId());
+			taskDto.setParentTask(parentTask);
+		}
+		return taskDto;
 	}
 
 }

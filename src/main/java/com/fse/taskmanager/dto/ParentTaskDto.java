@@ -1,41 +1,50 @@
 package com.fse.taskmanager.dto;
 
-import java.util.Date;
-import java.util.List;
 /**
  * The Class TaskManagerResponseDto.
  */
-public class TaskManagerResponseDto{
+public class ParentTaskDto{
 
+	/** The parent id. */
 	private int parentId;
 	
 	/** The parent task. */
 	private String parentTask;
 	
-	private List<TaskDto> taskDto;
-
+	/**
+	 * Gets the parent id.
+	 *
+	 * @return the parent id
+	 */
 	public int getParentId() {
 		return parentId;
 	}
 
+	/**
+	 * Sets the parent id.
+	 *
+	 * @param parentId the new parent id
+	 */
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
 
+	/**
+	 * Gets the parent task.
+	 *
+	 * @return the parent task
+	 */
 	public String getParentTask() {
 		return parentTask;
 	}
 
+	/**
+	 * Sets the parent task.
+	 *
+	 * @param parentTask the new parent task
+	 */
 	public void setParentTask(String parentTask) {
 		this.parentTask = parentTask;
-	}
-
-	public List<TaskDto> getTaskDto() {
-		return taskDto;
-	}
-
-	public void setTaskDto(List<TaskDto> taskDtoList) {
-		this.taskDto = taskDtoList;
 	}
 
 	
