@@ -80,5 +80,20 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		}
 		return taskDto;
 	}
+	/**
+	 * Delete task.
+	 *
+	 * @param taskDto the task dto
+	 * @return true, if successful
+	 */
+	@Override
+	public boolean deleteTask(final TaskDto taskDto) {
+		boolean deleteTask = false;
+		if(taskDto.getTaskId()>0) {
+			taskRepo.deleteById(taskDto.getTaskId());
+			deleteTask = true;
+		}
+		return deleteTask;
+	}
 
 }

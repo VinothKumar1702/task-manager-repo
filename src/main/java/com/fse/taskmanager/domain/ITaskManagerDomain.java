@@ -24,4 +24,12 @@ public interface ITaskManagerDomain {
 	 */
 	TaskDto addTask(TaskDto taskDto);
 
+	/**
+	 * Delete task.
+	 *
+	 * @param taskDto the task dto
+	 * @return true, if successful
+	 */
+	boolean deleteTask(TaskDto taskDto);
+
 }

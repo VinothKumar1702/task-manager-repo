@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.fse.taskmanager.entity.ParentTaskEO;
 
+/**
+ * The Interface IParentTaskRepository.
+ */
 @Repository
 public interface IParentTaskRepository extends JpaRepository<ParentTaskEO, Integer>{
 

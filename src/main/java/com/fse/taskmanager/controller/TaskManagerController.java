@@ -53,4 +53,18 @@ public class TaskManagerController {
 		return addTask;
 	}
 	
+	
+	/**
+	 * Delete task.
+	 *
+	 * @param taskDto the task dto
+	 * @return true, if successful
+	 */
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public boolean deleteTask(@RequestBody final TaskDto taskDto)  {
+		final boolean removeTask = taskManagerDomain.deleteTask(taskDto);
+		return removeTask;
+	}
 }

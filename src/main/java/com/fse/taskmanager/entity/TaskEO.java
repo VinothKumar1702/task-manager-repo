@@ -11,76 +11,145 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * The Class TaskEO.
+ */
 @Entity
 @Table(name = "Task")
 public class TaskEO {
 	
+	/** The task id. */
 	@Id
 	@Column(name = "Task_ID",nullable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int taskId;
 	
+	/** The parent task. */
 	@ManyToOne
 	@JoinColumn(name = "Parent_ID")
 	private ParentTaskEO parentTask;
 	
+	/** The priority. */
 	@Column(name = "Parent_Task")
 	private int priority;
 	
+	/** The start date. */
 	@Column(name = "Start_Date")
 	private Date startDate;
 	
+	/** The end date. */
 	@Column(name = "End_Date")
 	private Date endDate;
 	
+	/** The task. */
 	@Column(name = "Task")
 	private String task;
 
+	/**
+	 * Gets the task id.
+	 *
+	 * @return the task id
+	 */
 	public int getTaskId() {
 		return taskId;
 	}
 
-	public void setTaskId(int taskId) {
+	/**
+	 * Sets the task id.
+	 *
+	 * @param taskId the new task id
+	 */
+	public void setTaskId(final int taskId) {
 		this.taskId = taskId;
 	}
 
+	/**
+	 * Gets the parent task.
+	 *
+	 * @return the parent task
+	 */
 	public ParentTaskEO getParentTask() {
 		return parentTask;
 	}
 
-	public void setParentTask(ParentTaskEO parentTask) {
+	/**
+	 * Sets the parent task.
+	 *
+	 * @param parentTask the new parent task
+	 */
+	public void setParentTask(final ParentTaskEO parentTask) {
 		this.parentTask = parentTask;
 	}
 
+	/**
+	 * Gets the priority.
+	 *
+	 * @return the priority
+	 */
 	public int getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	/**
+	 * Sets the priority.
+	 *
+	 * @param priority the new priority
+	 */
+	public void setPriority(final int priority) {
 		this.priority = priority;
 	}
 
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the start date
+	 */
 	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	/**
+	 * Sets the start date.
+	 *
+	 * @param startDate the new start date
+	 */
+	public void setStartDate(final Date startDate) {
 		this.startDate = startDate;
 	}
 
+	/**
+	 * Gets the end date.
+	 *
+	 * @return the end date
+	 */
 	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	/**
+	 * Sets the end date.
+	 *
+	 * @param endDate the new end date
+	 */
+	public void setEndDate(final Date endDate) {
 		this.endDate = endDate;
 	}
 
+	/**
+	 * Gets the task.
+	 *
+	 * @return the task
+	 */
 	public String getTask() {
 		return task;
 	}
 
-	public void setTask(String task) {
+	/**
+	 * Sets the task.
+	 *
+	 * @param task the new task
+	 */
+	public void setTask(final String task) {
 		this.task = task;
 	}
 	
