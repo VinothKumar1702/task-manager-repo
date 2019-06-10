@@ -30,7 +30,7 @@ public class TaskEO {
 	private ParentTaskEO parentTask;
 	
 	/** The priority. */
-	@Column(name = "Parent_Task")
+	@Column(name = "priority")
 	private int priority;
 	
 	/** The start date. */

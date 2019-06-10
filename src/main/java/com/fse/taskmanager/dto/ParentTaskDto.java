@@ -47,5 +47,9 @@ public class ParentTaskDto{
 		this.parentTask = parentTask;
 	}
 
+	public ParentTaskDto() {
+		super();
+	}
+
 	
 }

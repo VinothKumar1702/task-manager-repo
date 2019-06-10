@@ -2,6 +2,9 @@ package com.fse.taskmanager.dto;
 
 import java.util.Date;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * The Class TaskDto.
  */
@@ -17,13 +20,19 @@ public class TaskDto {
 	private int priority;
 	
 	/** The start date. */
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date startDate;
 	
 	/** The end date. */
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date endDate;
 	
 	/** The parent task. */
 	private ParentTaskDto parentTask;
+
+	public TaskDto() {
+		super();
+	}
 
 	/**
 	 * Gets the task.

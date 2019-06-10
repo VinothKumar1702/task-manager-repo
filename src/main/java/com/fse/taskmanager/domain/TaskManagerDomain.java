@@ -11,6 +11,7 @@ import com.fse.taskmanager.dto.ParentTaskDto;
 import com.fse.taskmanager.dto.TaskDto;
 import com.fse.taskmanager.entity.ParentTaskEO;
 import com.fse.taskmanager.entity.TaskEO;
+import com.fse.taskmanager.repository.IParentTaskRepository;
 import com.fse.taskmanager.repository.ITaskRepositroy;
 
 /**
@@ -23,6 +24,9 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	/** The task repo. */
 	@Autowired
 	private ITaskRepositroy taskRepo;
+	/** The task repo. */
+	@Autowired
+	private IParentTaskRepository parentTaskRepo;
 	
 	/**
 	 * view task method.
@@ -69,6 +73,7 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		if(null!=taskDto.getParentTask()) {
 			final ParentTaskEO parentTaskEo = new ParentTaskEO();
 			parentTaskEo.setParentTask(taskDto.getParentTask().getParentTask());
+			parentTaskRepo.saveAndFlush(parentTaskEo);
 			taskEo.setParentTask(parentTaskEo);
 		}
 		taskRepo.saveAndFlush(taskEo);

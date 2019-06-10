@@ -18,6 +18,7 @@ public class TaskmanagerApplication {
 	 */
 	public static void main(final String[] args) {
 		SpringApplication.run(TaskmanagerApplication.class, args);
+
 	}
 
 }
