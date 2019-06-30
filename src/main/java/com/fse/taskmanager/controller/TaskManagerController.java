@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,8 +64,17 @@ public class TaskManagerController {
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteTask(@RequestBody final TaskDto taskDto)  {
-		final boolean removeTask = taskManagerDomain.deleteTask(taskDto);
+	public boolean deleteTask(@RequestParam final int taskId)  {
+		final boolean removeTask = taskManagerDomain.deleteTask(taskId);
 		return removeTask;
 	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public TaskDto updateTask(@RequestBody TaskDto task){
+		
+		return task = taskManagerDomain.updateTask(task);
+	}
+
 }

@@ -20,15 +20,21 @@ public class TaskDto {
 	private int priority;
 	
 	/** The start date. */
-	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date startDate;
 	
 	/** The end date. */
-	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date endDate;
 	
+	private boolean parentTaskFlag;
+	
 	/** The parent task. */
-	private ParentTaskDto parentTask;
+	//private ParentTaskDto parentTask;
+	
+	/** The parent id. */
+	private int parentId;
+	
+	/** The parent task. */
+	private String parentTask;
 
 	public TaskDto() {
 		super();
@@ -124,23 +130,31 @@ public class TaskDto {
 		this.endDate = endDate;
 	}
 
-	/**
-	 * Gets the parent task.
-	 *
-	 * @return the parent task
-	 */
-	public ParentTaskDto getParentTask() {
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getParentTask() {
 		return parentTask;
 	}
 
-	/**
-	 * Sets the parent task.
-	 *
-	 * @param parentTask the new parent task
-	 */
-	public void setParentTask(ParentTaskDto parentTask) {
+	public void setParentTask(String parentTask) {
 		this.parentTask = parentTask;
 	}
+
+	public boolean isParentTaskFlag() {
+		return parentTaskFlag;
+	}
+
+	public void setParentTaskFlag(boolean parentTaskFlag) {
+		this.parentTaskFlag = parentTaskFlag;
+	}
+
+	
 
 	
 }

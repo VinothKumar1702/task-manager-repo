@@ -27,9 +27,10 @@ public interface ITaskManagerDomain {
 	/**
 	 * Delete task.
 	 *
-	 * @param taskDto the task dto
+	 * @param taskId the task dto
 	 * @return true, if successful
 	 */
-	boolean deleteTask(TaskDto taskDto);
+	boolean deleteTask(int taskId);
 
-}
+	TaskDto updateTask(TaskDto task);
+ }

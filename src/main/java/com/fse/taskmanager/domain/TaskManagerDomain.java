@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fse.taskmanager.dto.ParentTaskDto;
 import com.fse.taskmanager.dto.TaskDto;
 import com.fse.taskmanager.entity.ParentTaskEO;
 import com.fse.taskmanager.entity.TaskEO;
@@ -46,10 +45,9 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 			taskDto.setEndDate(task.getEndDate());
 			taskDto.setPriority(task.getPriority());
 			if(null!=task.getParentTask()) {
-				final ParentTaskDto parentTask = new ParentTaskDto();
-				parentTask.setParentId(task.getParentTask().getParentId());
-				parentTask.setParentTask(task.getParentTask().getParentTask());
-				taskDto.setParentTask(parentTask);
+				
+				taskDto.setParentId(task.getParentTask().getParentId());
+				taskDto.setParentTask(task.getParentTask().getParentTask());
 			}
 			taskResponse.add(taskDto);
 		});
@@ -65,23 +63,28 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	@Override
 	@Transactional(readOnly = false)
 	public TaskDto addTask(final TaskDto taskDto) {
-		final TaskEO taskEo = new TaskEO();
-		taskEo.setTask(taskDto.getTask());
-		taskEo.setPriority(taskDto.getPriority());
-		taskEo.setStartDate(taskDto.getStartDate());
-		taskEo.setEndDate(taskDto.getEndDate());
-		if(null!=taskDto.getParentTask()) {
-			final ParentTaskEO parentTaskEo = new ParentTaskEO();
-			parentTaskEo.setParentTask(taskDto.getParentTask().getParentTask());
-			parentTaskRepo.saveAndFlush(parentTaskEo);
-			taskEo.setParentTask(parentTaskEo);
-		}
-		taskRepo.saveAndFlush(taskEo);
-		taskDto.setTaskId(taskEo.getTaskId());
-		if(null!=taskEo.getParentTask()) {
-			final ParentTaskDto parentTask = new ParentTaskDto();
-			parentTask.setParentId(taskEo.getParentTask().getParentId());
-			taskDto.setParentTask(parentTask);
+		if (taskDto.isParentTaskFlag()) {
+			ParentTaskEO pTask = new ParentTaskEO();
+			pTask.setParentTask(taskDto.getTask());
+			parentTaskRepo.saveAndFlush(pTask);
+		} else {
+			final TaskEO taskEo = new TaskEO();
+			taskEo.setTask(taskDto.getTask());
+			taskEo.setPriority(taskDto.getPriority());
+			taskEo.setStartDate(taskDto.getStartDate());
+			taskEo.setEndDate(taskDto.getEndDate());
+			if (null != taskDto.getParentTask()) {
+				final ParentTaskEO parentTaskEo = new ParentTaskEO();
+				parentTaskEo.setParentTask(taskDto.getParentTask());
+				parentTaskRepo.saveAndFlush(parentTaskEo);
+				taskEo.setParentTask(parentTaskEo);
+			}
+			taskRepo.saveAndFlush(taskEo);
+			taskDto.setTaskId(taskEo.getTaskId());
+			if (null != taskEo.getParentTask()) {
+				taskDto.setParentId(taskEo.getParentTask().getParentId());
+				taskDto.setParentTask(taskEo.getParentTask().getParentTask());
+			}
 		}
 		return taskDto;
 	}
@@ -92,13 +95,30 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean deleteTask(final TaskDto taskDto) {
+	public boolean deleteTask(int taskId) {
 		boolean deleteTask = false;
-		if(taskDto.getTaskId()>0) {
-			taskRepo.deleteById(taskDto.getTaskId());
+		if(taskId>0) {
+			taskRepo.deleteById(taskId);
 			deleteTask = true;
 		}
 		return deleteTask;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public TaskDto updateTask(TaskDto task) {
+		TaskEO	t = taskRepo.getOne(task.getTaskId());
+		if(task.getParentId()>1) {
+			ParentTaskEO parentTask = parentTaskRepo.getOne(task.getParentId());
+			parentTask.setParentTask(task.getParentTask());
+			parentTaskRepo.save(parentTask);
+		}
+		t.setTask(task.getTask());
+		t.setStartDate(task.getStartDate());
+		t.setEndDate(task.getEndDate());
+		t.setPriority(task.getPriority());
+		taskRepo.save(t);
+		return task;
 	}
 
 }

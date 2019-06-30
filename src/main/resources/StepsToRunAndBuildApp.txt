@@ -1,0 +1,37 @@
+Steps to Install angular and perforing development operations :
+
+1.Install npm and angular
+2.Intall angular cli using npm install -g @angular/cli  command.
+3.Create workspace by following command ng new task-manager-app.
+4.Serve the application for development purpose by ng-serve --o command.
+5.Create new components for add and view task 
+	ng generate component add-task
+	ng generate component view-task
+6.Create the Service for task in shared folder 
+	ng generate service task
+7.Create Model class for the json we created.
+8.Write the add/update/view/delete http service invocation logic.
+9.Provide routing between tabs using RouterModule.
+10.Create dist by running ng build command.
+
+Steps to Develop and Run Spring-Boot application:
+
+1.Create maven based spring project and edit application.properties to update information like port numbers,
+  sql connection details.
+2.Create the project package structure as src/main/java/com/fse/taskmanager
+3.Create Seperate controller/task/DTO/entity/repository for task and parent task.
+4.Create the ORM based entity classes for cmmunication between java and database.
+5.Develop the neccessary Logic for Add/Update/Get/Delete Java Services using java 8.
+6.run the maven command mvn-clean-install to generate war from the project.
+7.Run and serve the application for development purpose.
+
+Git integration and used commands:
+
+1.git init - Initialize a local Git repository
+2.git clone ssh://git@github.com/[username]/[repository-name].git -Create a local copy of a remote repository
+3.git add [file-name.txt]	Add a file to the staging area
+4.git add -A	Add all new and changed files to the staging area
+5.git commit -m "[commit message]"	Commit changes
+6.git rm -r [file-name.txt]	Remove a file (or folder)
+7.git push	Push changes to remote repository (remembered branch)
+8.git pull	Update local repository to the newest commit
