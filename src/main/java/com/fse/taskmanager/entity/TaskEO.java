@@ -29,6 +29,11 @@ public class TaskEO {
 	@JoinColumn(name = "Parent_ID")
 	private ParentTaskEO parentTask;
 	
+	/** The project. */
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	private ProjectEO project;
+	
 	/** The priority. */
 	@Column(name = "priority")
 	private int priority;
@@ -44,6 +49,9 @@ public class TaskEO {
 	/** The task. */
 	@Column(name = "Task")
 	private String task;
+	
+	@Column(name="Status")
+	private String status;
 
 	/**
 	 * Gets the task id.
@@ -151,6 +159,22 @@ public class TaskEO {
 	 */
 	public void setTask(final String task) {
 		this.task = task;
+	}
+
+	public ProjectEO getProject() {
+		return project;
+	}
+
+	public void setProject(ProjectEO project) {
+		this.project = project;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	
