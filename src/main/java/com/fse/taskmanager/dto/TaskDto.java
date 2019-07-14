@@ -20,9 +20,11 @@ public class TaskDto {
 	private int priority;
 	
 	/** The start date. */
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date startDate;
 	
 	/** The end date. */
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 	
 	private boolean parentTaskFlag;
