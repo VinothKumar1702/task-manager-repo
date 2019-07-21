@@ -29,14 +29,19 @@ public class TaskDto {
 	
 	private boolean parentTaskFlag;
 	
-	/** The parent task. */
-	//private ParentTaskDto parentTask;
-	
 	/** The parent id. */
 	private int parentId;
 	
 	/** The parent task. */
 	private String parentTask;
+	
+	private String project;
+	
+	private int projectId;
+	
+	private String user;
+	
+	private int userId;
 
 	public TaskDto() {
 		super();
@@ -156,7 +161,37 @@ public class TaskDto {
 		this.parentTaskFlag = parentTaskFlag;
 	}
 
-	
+	public String getProject() {
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	
 }

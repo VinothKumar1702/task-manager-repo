@@ -89,4 +89,18 @@ public class UserDomain implements IUserDomain{
 		}
 		return userDto;
 	}
+
+	@Override
+	public UserDTO getuserByProjectId(int projectId) {
+		UsersEO userseo = userRepo.getuserByProjectId(projectId);
+		UserDTO userDto = null;
+		if(null!=userseo) {
+			userDto = new UserDTO();
+			userDto.setUserId(userseo.getUserID());
+			userDto.setEmployeeId(userseo.getEmployeeId());
+			userDto.setFirstName(userseo.getFirstName());
+			userDto.setLastName(userseo.getLastName());
+		}
+		return userDto;
+	}
 }

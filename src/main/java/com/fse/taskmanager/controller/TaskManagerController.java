@@ -27,11 +27,6 @@ public class TaskManagerController {
 	@Autowired
 	private ITaskManagerDomain taskManagerDomain;
 	
-	/**
-	 * View task.
-	 *
-	 * @return the list
-	 */
 	@RequestMapping(value = "/view", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)

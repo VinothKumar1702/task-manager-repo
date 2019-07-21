@@ -8,4 +8,6 @@ public interface IParentTaskDomain {
 
 	List<ParentTaskDto> getParentTasks();
 
+	ParentTaskDto getParentTaskById(int parentTaskId);
+
 }

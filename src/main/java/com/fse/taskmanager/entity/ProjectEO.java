@@ -1,12 +1,16 @@
 package com.fse.taskmanager.entity;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,6 +37,9 @@ public class ProjectEO {
 	/** The end date. */
 	@Column(name = "end_Date")
 	private Date endDate;
+	
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<UsersEO> userEo;
 
 	public int getProjectId() {
 		return projectId;
@@ -72,6 +79,14 @@ public class ProjectEO {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public Set<UsersEO> getUserEo() {
+		return userEo;
+	}
+
+	public void setUserEo(Set<UsersEO> userEo) {
+		this.userEo = userEo;
 	}
 	
 	

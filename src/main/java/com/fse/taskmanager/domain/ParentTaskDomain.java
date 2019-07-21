@@ -32,5 +32,15 @@ public class ParentTaskDomain implements IParentTaskDomain{
 		}).collect(Collectors.toList());
 		return list;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ParentTaskDto getParentTaskById(int parentTaskId) {
+		ParentTaskEO parentEo = parentTaskRepo.getOne(parentTaskId);
+		ParentTaskDto dto = new ParentTaskDto();
+		dto.setParentId(parentEo.getParentId());
+		dto.setParentTask(parentEo.getParentTask());
+		return dto;
+	}
 	
 }

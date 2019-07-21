@@ -16,4 +16,6 @@ public interface IUserDomain {
 
 	UserDTO getUserById(int userID);
 
+	UserDTO getuserByProjectId(int projectId);
+
 }

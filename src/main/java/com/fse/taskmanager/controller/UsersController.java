@@ -77,4 +77,12 @@ public class UsersController {
 		final UserDTO editResponse = userDomain.editUsers(userDto);
 		return editResponse;
 	}	
+	
+	@RequestMapping(value = "/getuserbyproject/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public UserDTO getuserByProjectId(@PathVariable final int projectId)  {
+		final UserDTO viewTaskResponse = userDomain.getuserByProjectId(projectId);
+		return viewTaskResponse;
+	}
 }
