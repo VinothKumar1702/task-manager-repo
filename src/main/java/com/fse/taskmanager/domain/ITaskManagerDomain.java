@@ -33,4 +33,8 @@ public interface ITaskManagerDomain {
 	boolean deleteTask(int taskId);
 
 	TaskDto updateTask(TaskDto task);
+
+	TaskDto viewTaskById(int taskId);
+
+	List<TaskDto> viewTaskByProject(int projectId);
  }

@@ -16,4 +16,6 @@ public interface IUserRepository extends JpaRepository<UsersEO, Integer>{
 	@Query(value="select userEo from UsersEO userEo where userEo.project.projectId = :projectId")
 	UsersEO getuserByProjectId(@Param("projectId")int projectId);
 
+	@Query(value="select userEo from UsersEO userEo where userEo.userID = :userId")
+	UsersEO getuserByUserId(@Param("userId")int userId);
 }

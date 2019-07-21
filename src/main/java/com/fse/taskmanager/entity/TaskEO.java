@@ -34,6 +34,12 @@ public class TaskEO {
 	@JoinColumn(name = "project_id")
 	private ProjectEO project;
 	
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "user_id") private UsersEO user;
+	 */
+	
 	/** The priority. */
 	@Column(name = "priority")
 	private int priority;
@@ -89,6 +95,11 @@ public class TaskEO {
 		this.parentTask = parentTask;
 	}
 
+	/*
+	 * public UsersEO getUser() { return user; }
+	 * 
+	 * public void setUser(UsersEO user) { this.user = user; }
+	 */
 	/**
 	 * Gets the priority.
 	 *

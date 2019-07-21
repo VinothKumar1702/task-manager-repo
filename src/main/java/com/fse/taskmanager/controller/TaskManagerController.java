@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,21 @@ public class TaskManagerController {
 		return viewTaskResponse;
 	}	
 	
+	@RequestMapping(value = "/view/{taskId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public TaskDto viewTaskById(@PathVariable int taskId)  {
+		final TaskDto viewTaskResponse = taskManagerDomain.viewTaskById(taskId);
+		return viewTaskResponse;
+	}
+	
+	@RequestMapping(value = "/view-by-project/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public List<TaskDto> viewTaskByProject(@PathVariable int projectId)  {
+		final List<TaskDto> viewTaskResponse = taskManagerDomain.viewTaskByProject(projectId);
+		return viewTaskResponse;
+	}	
 	/**
 	 * Adds the task.
 	 *

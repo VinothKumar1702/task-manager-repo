@@ -27,6 +27,8 @@ public class TaskDto {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 	
+	private String completed;
+	
 	private boolean parentTaskFlag;
 	
 	/** The parent id. */
@@ -191,6 +193,14 @@ public class TaskDto {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public String getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(String completed) {
+		this.completed = completed;
 	}
 
 	

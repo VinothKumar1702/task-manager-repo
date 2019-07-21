@@ -18,7 +18,7 @@ public interface ITaskRepositroy extends JpaRepository<TaskEO, Integer> {
 	@Query(value="select task from TaskEO task where task.project.projectId=:projectId")
 	List<TaskEO> findProjects(@Param("projectId")int projectId);
 
-	@Query(value="select task from TaskEO task where task.status ='complete' and task.project.projectId=:projectId")
+	@Query(value="select task from TaskEO task where task.status ='COMPLETED' and task.project.projectId=:projectId")
 	List<TaskEO> getcompletedProjects(@Param("projectId")int projectId);
 
 }
