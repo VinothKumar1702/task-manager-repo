@@ -1,4 +1,4 @@
-package com.fse.taskmanager;
+package com.fse.taskmanager.controler;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
