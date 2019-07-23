@@ -36,7 +36,7 @@ public class UsersController {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public UserDTO addUsers(@RequestBody final UserDTO userDto)  {
-		final UserDTO userDtoResp = userDomain.addTask(userDto);
+		final UserDTO userDtoResp = userDomain.addUser(userDto);
 		return userDtoResp;
 	}
 	

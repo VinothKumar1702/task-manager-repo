@@ -23,20 +23,19 @@ import com.fse.taskmanager.repository.IUserRepository;
 @Component
 public class TaskManagerDomain implements ITaskManagerDomain {
 
-	
 	/** The task repo. */
 	@Autowired
 	private ITaskRepositroy taskRepo;
 	/** The task repo. */
 	@Autowired
 	private IParentTaskRepository parentTaskRepo;
-	
+
 	@Autowired
 	private IUserRepository userRepo;
-	
+
 	@Autowired
 	private IProjectRepository projectRepo;
-	
+
 	/**
 	 * view task method.
 	 *
@@ -47,7 +46,7 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	public List<TaskDto> viewTask() {
 		final List<TaskEO> taskEos = taskRepo.findAll();
 		final List<TaskDto> taskResponse = new ArrayList<>();
-		taskEos.stream().forEach(task->{
+		taskEos.stream().forEach(task -> {
 			final TaskDto taskDto = new TaskDto();
 			setTaskDetails(task, taskDto);
 			taskResponse.add(taskDto);
@@ -66,43 +65,36 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	public TaskDto addTask(final TaskDto taskDto) {
 		if (taskDto.isParentTaskFlag()) {
 			ParentTaskEO pTask = new ParentTaskEO();
-			pTask.setParentTask(taskDto.getTask());
+			pTask.setParentTask(taskDto.getTask().trim());
 			parentTaskRepo.saveAndFlush(pTask);
+			taskDto.setParentId(pTask.getParentId());
 		} else {
-			if(null!=taskDto.getTask()) {
-			
-			final TaskEO taskEo = new TaskEO();
-			taskEo.setTask(taskDto.getTask());
-			taskEo.setPriority(taskDto.getPriority());
-			taskEo.setStartDate(taskDto.getStartDate());
-			taskEo.setEndDate(taskDto.getEndDate());
-			taskEo.setStatus(taskDto.getCompleted());
-			if (null != taskDto.getParentTask()) {
-				final ParentTaskEO parentTaskEo = parentTaskRepo.fetchParentTaskByName(taskDto.getParentTask());
-				//parentTaskEo.setParentTask(taskDto.getParentTask());
-				//parentTaskRepo.saveAndFlush(parentTaskEo);
-				taskEo.setParentTask(parentTaskEo);
+			if (null != taskDto.getTask()) {
+				final TaskEO taskEo = new TaskEO();
+				taskEo.setTask(taskDto.getTask());
+				taskEo.setPriority(taskDto.getPriority());
+				taskEo.setStartDate(taskDto.getStartDate());
+				taskEo.setEndDate(taskDto.getEndDate());
+				taskEo.setStatus("IN PROGRESS");
+				if (null != taskDto.getParentTask()) {
+					final ParentTaskEO parentTaskEo = parentTaskRepo.fetchParentTaskByName(taskDto.getParentTask().trim());
+					taskEo.setParentTask(parentTaskEo);
+				}
+				if (null != taskDto.getProject()) {
+					ProjectEO projectEO = projectRepo.getProjectByPName(taskDto.getProject());
+					taskEo.setProject(projectEO);
+				}
+				if (taskDto.getUserId() > 0) {
+					UsersEO userEo = userRepo.getOne(taskDto.getUserId());
+					taskEo.setUser(userEo);
+				}
+				taskRepo.saveAndFlush(taskEo);
+				setTaskDetails(taskEo, taskDto);
 			}
-			if(null!=taskDto.getProject()) {
-				ProjectEO projectEO = projectRepo.getProjectByPName(taskDto.getProject());
-				taskEo.setProject(projectEO);
-			}
-			/*
-			 * if( taskDto.getUserId()>0) { UsersEO userEo =
-			 * userRepo.getuserByUserId(taskDto.getUserId()); taskEo.setUser(userEo); }
-			 */
-			taskRepo.saveAndFlush(taskEo);
-			//taskDto.setTaskId(taskEo.getTaskId());
-			/*
-			 * if (null != taskEo.getParentTask()) {
-			 * taskDto.setParentId(taskEo.getParentTask().getParentId());
-			 * taskDto.setParentTask(taskEo.getParentTask().getParentTask()); }
-			 */
-			setTaskDetails(taskEo,taskDto);
-		}
 		}
 		return taskDto;
 	}
+
 	/**
 	 * Delete task.
 	 *
@@ -110,46 +102,44 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	 * @return true, if successful
 	 */
 	@Override
-	public boolean deleteTask(int taskId) {
-		boolean deleteTask = false;
-		if(taskId>0) {
-			TaskEO	t = taskRepo.getOne(taskId);
+	@Transactional(readOnly = false)
+	public boolean endTask(int taskId) {
+		boolean endTask = false;
+		if (taskId > 0) {
+			TaskEO t = taskRepo.getOne(taskId);
 			t.setStatus("COMPLETED");
 			taskRepo.save(t);
-			deleteTask = true;
+			endTask = true;
 		}
-		return deleteTask;
+		return endTask;
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public TaskDto updateTask(TaskDto task) {
-		TaskEO	t = taskRepo.getOne(task.getTaskId());
-		if(task.getParentId()>0) {
-			ParentTaskEO parentTask = parentTaskRepo.getOne(task.getParentId());
-			parentTask.setParentTask(task.getParentTask());
-			//parentTaskRepo.save(parentTask);
+		TaskEO taskEo = taskRepo.getOne(task.getTaskId());
+		ParentTaskEO parentTask=null;
+		if (task.getParentId() > 0) {
+			parentTask = parentTaskRepo.getOne(task.getParentId());
+		}else {
+			parentTask = new ParentTaskEO();
 		}
-		if (null != task.getParentTask()) {
-			final ParentTaskEO parentTaskEo = parentTaskRepo.fetchParentTaskByName(task.getParentTask());
-			//parentTaskEo.setParentTask(taskDto.getParentTask());
-			//parentTaskRepo.saveAndFlush(parentTaskEo);
-			t.setParentTask(parentTaskEo);
-		}
-		if(null!=task.getProject()) {
+		taskEo.setParentTask(parentTask);
+
+		if (null != task.getProject()) {
 			ProjectEO projectEO = projectRepo.getProjectByPName(task.getProject());
-			t.setProject(projectEO);
+			taskEo.setProject(projectEO);
 		}
-		/*
-		 * if( null!=task.getUser()) { UsersEO userEo =
-		 * userRepo.getuserByUserId(task.getUserId()); t.setUser(userEo); }
-		 */
-		t.setTask(task.getTask());
-		t.setStartDate(task.getStartDate());
-		t.setEndDate(task.getEndDate());
-		t.setPriority(task.getPriority());
-		t.setStatus(task.getCompleted());
-		taskRepo.save(t);
+		if (null != task.getUser()) {
+			UsersEO userEo = userRepo.getOne(task.getUserId());
+			taskEo.setUser(userEo);
+		}
+		taskEo.setTask(task.getTask());
+		taskEo.setStartDate(task.getStartDate());
+		taskEo.setEndDate(task.getEndDate());
+		taskEo.setPriority(task.getPriority());
+		taskEo.setStatus("IN PROGRESS");
+		taskRepo.save(taskEo);
 		return task;
 	}
 
@@ -169,26 +159,26 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		taskDto.setEndDate(task.getEndDate());
 		taskDto.setPriority(task.getPriority());
 		taskDto.setCompleted(task.getStatus());
-		if(null!=task.getParentTask()) {
+		if (null != task.getParentTask()) {
 			taskDto.setParentId(task.getParentTask().getParentId());
 			taskDto.setParentTask(task.getParentTask().getParentTask());
 		}
-		if(null!=task.getProject()) {
+		if (null != task.getProject()) {
 			taskDto.setProject(task.getProject().getProjectName());
 			taskDto.setProjectId(task.getProject().getProjectId());
 		}
-		/*
-		 * if(null!=task.getUser()) {
-		 * taskDto.setUser(task.getUser().getFirstName()+" "+task.getUser().getLastName(
-		 * )); taskDto.setUserId(task.getUser().getUserID()); }
-		 */
+		if (null != task.getUser()) {
+			taskDto.setUser(task.getUser().getFirstName() + " " + task.getUser().getLastName());
+			taskDto.setUserId(task.getUser().getUserID());
+		}
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<TaskDto> viewTaskByProject(int projectId) {
 		List<TaskDto> list = new ArrayList<>();
 		List<TaskEO> eo = taskRepo.findProjects(projectId);
-		eo.stream().forEach(task->{
+		eo.stream().forEach(task -> {
 			final TaskDto taskDto = new TaskDto();
 			setTaskDetails(task, taskDto);
 			list.add(taskDto);
@@ -196,4 +186,3 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		return list;
 	}
 }
-

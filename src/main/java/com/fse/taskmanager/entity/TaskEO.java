@@ -17,46 +17,44 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Task")
 public class TaskEO {
-	
+
 	/** The task id. */
 	@Id
-	@Column(name = "Task_ID",nullable=false)
+	@Column(name = "Task_ID", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int taskId;
-	
+
 	/** The parent task. */
 	@ManyToOne
 	@JoinColumn(name = "Parent_ID")
 	private ParentTaskEO parentTask;
-	
+
 	/** The project. */
 	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private ProjectEO project;
-	
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "user_id") private UsersEO user;
-	 */
-	
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private UsersEO user;
+
 	/** The priority. */
 	@Column(name = "priority")
 	private int priority;
-	
+
 	/** The start date. */
 	@Column(name = "Start_Date")
 	private Date startDate;
-	
+
 	/** The end date. */
 	@Column(name = "End_Date")
 	private Date endDate;
-	
+
 	/** The task. */
 	@Column(name = "Task")
 	private String task;
-	
-	@Column(name="Status")
+
+	@Column(name = "Status")
 	private String status;
 
 	/**
@@ -95,11 +93,14 @@ public class TaskEO {
 		this.parentTask = parentTask;
 	}
 
-	/*
-	 * public UsersEO getUser() { return user; }
-	 * 
-	 * public void setUser(UsersEO user) { this.user = user; }
-	 */
+	public UsersEO getUser() {
+		return user;
+	}
+
+	public void setUser(UsersEO user) {
+		this.user = user;
+	}
+
 	/**
 	 * Gets the priority.
 	 *
@@ -187,6 +188,5 @@ public class TaskEO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
 }

@@ -6,7 +6,7 @@ import com.fse.taskmanager.dto.UserDTO;
 
 public interface IUserDomain {
 
-	UserDTO addTask(UserDTO userDto);
+	UserDTO addUser(UserDTO userDto);
 
 	List<UserDTO> viewUsers();
 

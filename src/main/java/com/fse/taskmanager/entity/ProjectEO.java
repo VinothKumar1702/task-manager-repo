@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,8 +40,9 @@ public class ProjectEO {
 	@Column(name = "end_Date")
 	private Date endDate;
 	
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<UsersEO> userEo;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private UsersEO userEo;
 
 	public int getProjectId() {
 		return projectId;
@@ -81,11 +84,11 @@ public class ProjectEO {
 		this.endDate = endDate;
 	}
 
-	public Set<UsersEO> getUserEo() {
+	public UsersEO getUserEo() {
 		return userEo;
 	}
 
-	public void setUserEo(Set<UsersEO> userEo) {
+	public void setUserEo(UsersEO userEo) {
 		this.userEo = userEo;
 	}
 	

@@ -1,13 +1,18 @@
 package com.fse.taskmanager.entity;
 
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,14 +26,12 @@ public class UsersEO {
 	private int userID;
 	
 	/** The parent task. */
-	@ManyToOne
-	@JoinColumn(name = "Task_ID")
-	private TaskEO task;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<TaskEO> task;
 	
 	/** The project. */
-	@ManyToOne
-	@JoinColumn(name = "project_id")
-	private ProjectEO project;
+	@OneToMany(mappedBy = "userEo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<ProjectEO> project;
 	
 	/** The priority. */
 	@Column(name = "employee_id")
@@ -36,7 +39,7 @@ public class UsersEO {
 	
 	
 	/** The task. */
-	@Column(name = "firts_name")
+	@Column(name = "first_name")
 	private String firstName;
 	
 	@Column(name="last_name")
@@ -50,19 +53,19 @@ public class UsersEO {
 		this.userID = userID;
 	}
 
-	public TaskEO getTask() {
+	public Set<TaskEO> getTask() {
 		return task;
 	}
 
-	public void setTask(TaskEO task) {
+	public void setTask(Set<TaskEO> task) {
 		this.task = task;
 	}
 
-	public ProjectEO getProject() {
+	public Set<ProjectEO> getProject() {
 		return project;
 	}
 
-	public void setProject(ProjectEO project) {
+	public void setProject(Set<ProjectEO> project) {
 		this.project = project;
 	}
 

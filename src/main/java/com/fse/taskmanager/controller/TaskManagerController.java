@@ -72,11 +72,11 @@ public class TaskManagerController {
 	 * @param taskDto the task dto
 	 * @return true, if successful
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/end", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteTask(@RequestParam final int taskId)  {
-		final boolean removeTask = taskManagerDomain.deleteTask(taskId);
+	public boolean endTask(@RequestParam final int taskId)  {
+		final boolean removeTask = taskManagerDomain.endTask(taskId);
 		return removeTask;
 	}
 	

@@ -26,7 +26,7 @@ public class UserDomain implements IUserDomain{
 	
 	@Override
 	@Transactional(readOnly = false)
-	public UserDTO addTask(UserDTO userDto) {
+	public UserDTO addUser(UserDTO userDto) {
 		UsersEO userEo = new UsersEO();
 		userEo.setFirstName(userDto.getFirstName());
 		userEo.setLastName(userDto.getLastName());
@@ -92,15 +92,15 @@ public class UserDomain implements IUserDomain{
 
 	@Override
 	public UserDTO getuserByProjectId(int projectId) {
-		UsersEO userseo = userRepo.getuserByProjectId(projectId);
+		//UsersEO userseo = userRepo.getuserByProjectId(projectId);
 		UserDTO userDto = null;
-		if(null!=userseo) {
-			userDto = new UserDTO();
-			userDto.setUserId(userseo.getUserID());
-			userDto.setEmployeeId(userseo.getEmployeeId());
-			userDto.setFirstName(userseo.getFirstName());
-			userDto.setLastName(userseo.getLastName());
-		}
+		/*
+		 * if(null!=userseo) { userDto = new UserDTO();
+		 * userDto.setUserId(userseo.getUserID());
+		 * userDto.setEmployeeId(userseo.getEmployeeId());
+		 * userDto.setFirstName(userseo.getFirstName());
+		 * userDto.setLastName(userseo.getLastName()); }
+		 */
 		return userDto;
 	}
 }

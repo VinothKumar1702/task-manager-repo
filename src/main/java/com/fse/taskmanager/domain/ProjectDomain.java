@@ -41,10 +41,9 @@ public class ProjectDomain implements IProjectDomain {
 			dto.setEndDate(eo.getEndDate());
 			dto.setTasks(getProjectTasks(eo.getProjectId()));
 			dto.setCompleted(getcompleted(eo.getProjectId()));
-			UsersEO userEo = userRepo.getManager(eo.getProjectId());
-			if (null != userEo) {
-				dto.setManager(userEo.getFirstName()+" "+userEo.getLastName());
-				dto.setUserId(userEo.getUserID());
+			if (null!=eo.getUserEo()) {
+				dto.setManager(eo.getUserEo().getFirstName()+" "+eo.getUserEo().getLastName());
+				dto.setUserId(eo.getUserEo().getUserID());
 			}
 			projectDtos.add(dto);
 		});
@@ -58,8 +57,7 @@ public class ProjectDomain implements IProjectDomain {
 		getProject(projectDto, projectEo);
 		if (projectDto.getUserId() > 0) {
 			UsersEO userEo = userRepo.getOne(projectDto.getUserId());
-			userEo.setProject(projectEo);
-			userRepo.save(userEo);
+			projectEo.setUserEo(userEo);
 		}
 		projectRepo.save(projectEo);
 		return projectDto;
@@ -90,9 +88,7 @@ public class ProjectDomain implements IProjectDomain {
 		getProject(projectDto, projectEo);
 		if (projectDto.getUserId() > 0) {
 			UsersEO userEo = userRepo.getOne(projectDto.getUserId());
-			userEo.setUserID(projectDto.getUserId());
-			userEo.setProject(projectEo);
-			userRepo.save(userEo);
+			projectEo.setUserEo(userEo);
 		}
 		projectRepo.save(projectEo);
 		projectDto.setProjectId(projectEo.getProjectId());
@@ -108,10 +104,9 @@ public class ProjectDomain implements IProjectDomain {
 		response.setPriority(projectEo.getPriority());
 		response.setStartDate(projectEo.getStartDate());
 		response.setEndDate(projectEo.getEndDate());
-		UsersEO userEo = userRepo.getManager(projectEo.getProjectId());
-		if (null != userEo) {
-			response.setManager(userEo.getFirstName());
-			response.setUserId(userEo.getUserID());
+		if (null!=projectEo.getUserEo()) {
+			response.setManager(projectEo.getUserEo().getFirstName()+" "+projectEo.getUserEo().getLastName());
+			response.setUserId(projectEo.getUserEo().getUserID());
 		}
 		return response;
 	}
@@ -139,10 +134,9 @@ public class ProjectDomain implements IProjectDomain {
 		dto.setEndDate(eo.getEndDate());
 		dto.setTasks(getProjectTasks(eo.getProjectId()));
 		dto.setCompleted(getcompleted(eo.getProjectId()));
-		UsersEO userEo = userRepo.getManager(eo.getProjectId());
-		if (null != userEo) {
-			dto.setManager(userEo.getFirstName()+" "+userEo.getLastName());
-			dto.setUserId(userEo.getUserID());
+		if (null!=eo.getUserEo()) {
+			dto.setManager(eo.getUserEo().getFirstName()+" "+eo.getUserEo().getLastName());
+			dto.setUserId(eo.getUserEo().getUserID());
 		}
 		return dto;
 	}
