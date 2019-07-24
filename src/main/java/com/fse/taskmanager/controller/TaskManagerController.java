@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.controller;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fse.taskmanager.domain.ITaskManagerDomain;
 import com.fse.taskmanager.dto.TaskDto;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TaskManagerController.
  */
@@ -28,6 +32,11 @@ public class TaskManagerController {
 	@Autowired
 	private ITaskManagerDomain taskManagerDomain;
 	
+	/**
+	 * View task.
+	 *
+	 * @return the list
+	 */
 	@RequestMapping(value = "/view", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -36,6 +45,12 @@ public class TaskManagerController {
 		return viewTaskResponse;
 	}	
 	
+	/**
+	 * View task by id.
+	 *
+	 * @param taskId the task id
+	 * @return the task dto
+	 */
 	@RequestMapping(value = "/view/{taskId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -44,6 +59,12 @@ public class TaskManagerController {
 		return viewTaskResponse;
 	}
 	
+	/**
+	 * View task by project.
+	 *
+	 * @param projectId the project id
+	 * @return the list
+	 */
 	@RequestMapping(value = "/view-by-project/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -69,7 +90,7 @@ public class TaskManagerController {
 	/**
 	 * Delete task.
 	 *
-	 * @param taskDto the task dto
+	 * @param taskId the task id
 	 * @return true, if successful
 	 */
 	@RequestMapping(value = "/end", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -80,6 +101,12 @@ public class TaskManagerController {
 		return removeTask;
 	}
 	
+	/**
+	 * Update task.
+	 *
+	 * @param task the task
+	 * @return the task dto
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)

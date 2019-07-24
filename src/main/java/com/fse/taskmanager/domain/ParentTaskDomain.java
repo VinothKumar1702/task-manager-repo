@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.domain;
 
 
@@ -13,12 +16,20 @@ import com.fse.taskmanager.dto.ParentTaskDto;
 import com.fse.taskmanager.entity.ParentTaskEO;
 import com.fse.taskmanager.repository.IParentTaskRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ParentTaskDomain.
+ */
 @Component
 public class ParentTaskDomain implements IParentTaskDomain{
 
+	/** The parent task repo. */
 	@Autowired
 	private IParentTaskRepository parentTaskRepo;
 	
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IParentTaskDomain#getParentTasks()
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<ParentTaskDto> getParentTasks() {
@@ -33,6 +44,9 @@ public class ParentTaskDomain implements IParentTaskDomain{
 		return list;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IParentTaskDomain#getParentTaskById(int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public ParentTaskDto getParentTaskById(int parentTaskId) {

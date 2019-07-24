@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.entity;
 
 import java.util.List;
@@ -11,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ParentTaskEO.
  */

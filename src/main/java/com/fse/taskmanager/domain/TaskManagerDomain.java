@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.domain;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import com.fse.taskmanager.repository.IProjectRepository;
 import com.fse.taskmanager.repository.ITaskRepositroy;
 import com.fse.taskmanager.repository.IUserRepository;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TaskManagerDomain.
  */
@@ -30,9 +34,11 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	@Autowired
 	private IParentTaskRepository parentTaskRepo;
 
+	/** The user repo. */
 	@Autowired
 	private IUserRepository userRepo;
 
+	/** The project repo. */
 	@Autowired
 	private IProjectRepository projectRepo;
 
@@ -98,7 +104,7 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	/**
 	 * Delete task.
 	 *
-	 * @param taskDto the task dto
+	 * @param taskId the task id
 	 * @return true, if successful
 	 */
 	@Override
@@ -114,6 +120,9 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		return endTask;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.ITaskManagerDomain#updateTask(com.fse.taskmanager.dto.TaskDto)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public TaskDto updateTask(TaskDto task) {
@@ -143,6 +152,9 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		return task;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.ITaskManagerDomain#viewTaskById(int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public TaskDto viewTaskById(int taskId) {
@@ -152,6 +164,12 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		return taskDto;
 	}
 
+	/**
+	 * Sets the task details.
+	 *
+	 * @param task the task
+	 * @param taskDto the task dto
+	 */
 	private void setTaskDetails(TaskEO task, TaskDto taskDto) {
 		taskDto.setTaskId(task.getTaskId());
 		taskDto.setTask(task.getTask());
@@ -173,6 +191,9 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.ITaskManagerDomain#viewTaskByProject(int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<TaskDto> viewTaskByProject(int projectId) {

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.controller;
 
 import java.util.List;
@@ -16,14 +19,24 @@ import com.fse.taskmanager.domain.IParentTaskDomain;
 import com.fse.taskmanager.dto.ParentTaskDto;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ParentTaskController.
+ */
 @RestController
 @RequestMapping("/parent-task")
 public class ParentTaskController {
 
 	
+	/** The parent task domain. */
 	@Autowired
 	private IParentTaskDomain parentTaskDomain;
 	
+	/**
+	 * Gets the parent tasks.
+	 *
+	 * @return the parent tasks
+	 */
 	@RequestMapping(value = "/view", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -31,10 +44,16 @@ public class ParentTaskController {
 		return parentTaskDomain.getParentTasks();
 	}
 	
+	/**
+	 * Gets the parent task by id.
+	 *
+	 * @param parentTaskId the parent task id
+	 * @return the parent task by id
+	 */
 	@RequestMapping(value = "/view/{parentTaskId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public ParentTaskDto getParentTaskById(@PathVariable int parentTaskId) {
+	public ParentTaskDto getParentTaskById(@PathVariable final int parentTaskId) {
 		return parentTaskDomain.getParentTaskById(parentTaskId);
 	}
 } 

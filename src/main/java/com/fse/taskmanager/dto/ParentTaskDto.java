@@ -1,5 +1,9 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.dto;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TaskManagerResponseDto.
  */
@@ -47,6 +51,9 @@ public class ParentTaskDto{
 		this.parentTask = parentTask;
 	}
 
+	/**
+	 * Instantiates a new parent task dto.
+	 */
 	public ParentTaskDto() {
 		super();
 	}

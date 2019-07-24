@@ -14,16 +14,22 @@ import com.fse.taskmanager.dto.UserDTO;
 import com.fse.taskmanager.entity.UsersEO;
 import com.fse.taskmanager.repository.IUserRepository;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Vinoth
+ * The Class UserDomain.
  *
+ * @author Vinoth
  */
 @Component
 public class UserDomain implements IUserDomain{
 
+	/** The user repo. */
 	@Autowired
 	private IUserRepository userRepo;
 	
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#addUser(com.fse.taskmanager.dto.UserDTO)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public UserDTO addUser(UserDTO userDto) {
@@ -38,6 +44,9 @@ public class UserDomain implements IUserDomain{
 		return userDto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#viewUsers()
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserDTO> viewUsers() {
@@ -54,6 +63,9 @@ public class UserDomain implements IUserDomain{
 		return users;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#deleteUsers(int)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean deleteUsers(int userID) {
@@ -65,6 +77,9 @@ public class UserDomain implements IUserDomain{
 		return delete;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#editUsers(com.fse.taskmanager.dto.UserDTO)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public UserDTO editUsers(UserDTO userDto) {
@@ -76,6 +91,9 @@ public class UserDomain implements IUserDomain{
 		return userDto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#getUserById(int)
+	 */
 	@Override
 	public UserDTO getUserById(int userID) {
 		UsersEO userseo = userRepo.getOne(userID);
@@ -90,6 +108,9 @@ public class UserDomain implements IUserDomain{
 		return userDto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IUserDomain#getuserByProjectId(int)
+	 */
 	@Override
 	public UserDTO getuserByProjectId(int projectId) {
 		//UsersEO userseo = userRepo.getuserByProjectId(projectId);

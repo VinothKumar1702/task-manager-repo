@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.domain;
 
 import java.util.ArrayList;
@@ -15,25 +18,34 @@ import com.fse.taskmanager.repository.IProjectRepository;
 import com.fse.taskmanager.repository.ITaskRepositroy;
 import com.fse.taskmanager.repository.IUserRepository;
 
+/**
+ * The Class ProjectDomain.
+ */
 @Component
 public class ProjectDomain implements IProjectDomain {
 
+	/** The project repo. */
 	@Autowired
 	private IProjectRepository projectRepo;
 
+	/** The user repo. */
 	@Autowired
 	private IUserRepository userRepo;
 	
+	/** The task repo. */
 	@Autowired
 	private ITaskRepositroy taskRepo;
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#viewProjects()
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProjectDto> viewProjects() {
-		List<ProjectEO> projectEos = projectRepo.findAll();
-		List<ProjectDto> projectDtos = new ArrayList<>();
+		final List<ProjectEO> projectEos = projectRepo.findAll();
+		final List<ProjectDto> projectDtos = new ArrayList<>();
 		projectEos.forEach(eo -> {
-			ProjectDto dto = new ProjectDto();
+			final ProjectDto dto = new ProjectDto();
 			dto.setProjectId(eo.getProjectId());
 			dto.setPriority(eo.getPriority());
 			dto.setProject(eo.getProjectName());
@@ -50,29 +62,42 @@ public class ProjectDomain implements IProjectDomain {
 		return projectDtos;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#updateProject(com.fse.taskmanager.dto.ProjectDto)
+	 */
 	@Override
 	@Transactional(readOnly = false)
-	public ProjectDto updateProject(ProjectDto projectDto) {
-		ProjectEO projectEo = projectRepo.getOne(projectDto.getProjectId());
+	public ProjectDto updateProject(final ProjectDto projectDto) {
+		final ProjectEO projectEo = projectRepo.getOne(projectDto.getProjectId());
 		getProject(projectDto, projectEo);
 		if (projectDto.getUserId() > 0) {
-			UsersEO userEo = userRepo.getOne(projectDto.getUserId());
+			final UsersEO userEo = userRepo.getOne(projectDto.getUserId());
 			projectEo.setUserEo(userEo);
 		}
 		projectRepo.save(projectEo);
 		return projectDto;
 	}
 
-	private void getProject(ProjectDto projectDto, ProjectEO projectEo) {
+	/**
+	 * Gets the project.
+	 *
+	 * @param projectDto the project dto
+	 * @param projectEo the project eo
+	 * @return the project
+	 */
+	private void getProject(final ProjectDto projectDto, final ProjectEO projectEo) {
 		projectEo.setProjectName(projectDto.getProject());
 		projectEo.setPriority(projectDto.getPriority());
 		projectEo.setStartDate(projectDto.getStartDate());
 		projectEo.setEndDate(projectDto.getEndDate());
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#deleteProject(int)
+	 */
 	@Override
 	@Transactional(readOnly = false)
-	public boolean deleteProject(int projectId) {
+	public boolean deleteProject(final int projectId) {
 		boolean deleteProject = false;
 		if (projectId > 0) {
 			projectRepo.deleteById(projectId);
@@ -81,13 +106,16 @@ public class ProjectDomain implements IProjectDomain {
 		return deleteProject;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#addProject(com.fse.taskmanager.dto.ProjectDto)
+	 */
 	@Override
 	@Transactional(readOnly = false)
-	public ProjectDto addProject(ProjectDto projectDto) {
-		ProjectEO projectEo = new ProjectEO();
+	public ProjectDto addProject(final ProjectDto projectDto) {
+		final ProjectEO projectEo = new ProjectEO();
 		getProject(projectDto, projectEo);
 		if (projectDto.getUserId() > 0) {
-			UsersEO userEo = userRepo.getOne(projectDto.getUserId());
+			final UsersEO userEo = userRepo.getOne(projectDto.getUserId());
 			projectEo.setUserEo(userEo);
 		}
 		projectRepo.save(projectEo);
@@ -95,10 +123,13 @@ public class ProjectDomain implements IProjectDomain {
 		return projectDto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#getProject(int)
+	 */
 	@Override
-	public ProjectDto getProject(int projectId) {
-		ProjectDto response = new ProjectDto();
-		ProjectEO projectEo = projectRepo.getOne(projectId);
+	public ProjectDto getProject(final int projectId) {
+		final ProjectDto response = new ProjectDto();
+		final ProjectEO projectEo = projectRepo.getOne(projectId);
 		response.setProjectId(projectEo.getProjectId());
 		response.setProject(projectEo.getProjectName());
 		response.setPriority(projectEo.getPriority());
@@ -111,22 +142,31 @@ public class ProjectDomain implements IProjectDomain {
 		return response;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#getProjectTasks(int)
+	 */
 	@Override
-	public int getProjectTasks(int projectId) {
-		List<TaskEO> tasks = taskRepo.findProjects(projectId);
+	public int getProjectTasks(final int projectId) {
+		final List<TaskEO> tasks = taskRepo.findProjects(projectId);
 		return tasks.size();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#getcompleted(int)
+	 */
 	@Override
-	public int getcompleted(int projectId) {
-		List<TaskEO> tasks = taskRepo.getcompletedProjects(projectId);
+	public int getcompleted(final int projectId) {
+		final List<TaskEO> tasks = taskRepo.getcompletedProjects(projectId);
 		return tasks.size();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.fse.taskmanager.domain.IProjectDomain#getProjectByPName(java.lang.String)
+	 */
 	@Override
-	public ProjectDto getProjectByPName(String project) {
-		ProjectDto dto = new ProjectDto();
-		ProjectEO eo = projectRepo.getProjectByPName(project);
+	public ProjectDto getProjectByPName(final String project) {
+		final ProjectDto dto = new ProjectDto();
+		final ProjectEO eo = projectRepo.getProjectByPName(project);
 		dto.setProjectId(eo.getProjectId());
 		dto.setPriority(eo.getPriority());
 		dto.setProject(eo.getProjectName());

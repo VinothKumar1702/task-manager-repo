@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.entity;
 
 import java.util.Date;
@@ -11,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TaskEO.
  */
@@ -34,6 +38,7 @@ public class TaskEO {
 	@JoinColumn(name = "project_id")
 	private ProjectEO project;
 
+	/** The user. */
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private UsersEO user;
@@ -54,6 +59,7 @@ public class TaskEO {
 	@Column(name = "Task")
 	private String task;
 
+	/** The status. */
 	@Column(name = "Status")
 	private String status;
 
@@ -93,10 +99,20 @@ public class TaskEO {
 		this.parentTask = parentTask;
 	}
 
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
 	public UsersEO getUser() {
 		return user;
 	}
 
+	/**
+	 * Sets the user.
+	 *
+	 * @param user the new user
+	 */
 	public void setUser(UsersEO user) {
 		this.user = user;
 	}
@@ -173,18 +189,38 @@ public class TaskEO {
 		this.task = task;
 	}
 
+	/**
+	 * Gets the project.
+	 *
+	 * @return the project
+	 */
 	public ProjectEO getProject() {
 		return project;
 	}
 
+	/**
+	 * Sets the project.
+	 *
+	 * @param project the new project
+	 */
 	public void setProject(ProjectEO project) {
 		this.project = project;
 	}
 
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.fse.taskmanager.controller;
 
 import java.util.List;
@@ -16,15 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fse.taskmanager.domain.IProjectDomain;
 import com.fse.taskmanager.dto.ProjectDto;
-import com.fse.taskmanager.dto.TaskDto;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProjectController.
+ */
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
 
+	/** The project domain. */
 	@Autowired
 	private IProjectDomain projectDomain;
 	
+	/**
+	 * View projects.
+	 *
+	 * @return the list
+	 */
 	@RequestMapping(value = "/view", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -33,6 +45,12 @@ public class ProjectController {
 		return viewProjectResponse;
 	}	
 	
+	/**
+	 * Adds the project.
+	 *
+	 * @param projectDto the project dto
+	 * @return the project dto
+	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -41,6 +59,12 @@ public class ProjectController {
 		return projectDtoReponse;
 	}
 	
+	/**
+	 * Delete project.
+	 *
+	 * @param projectId the project id
+	 * @return true, if successful
+	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -49,6 +73,12 @@ public class ProjectController {
 		return deleteProject;
 	}
 	
+	/**
+	 * Update project.
+	 *
+	 * @param projectDto the project dto
+	 * @return the project dto
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -57,6 +87,12 @@ public class ProjectController {
 		return projectDto = projectDomain.updateProject(projectDto);
 	}
 	
+	/**
+	 * Gets the project.
+	 *
+	 * @param projectId the project id
+	 * @return the project
+	 */
 	@RequestMapping(value = "/getByProjectId/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -65,6 +101,12 @@ public class ProjectController {
 		return projectDtoReponse;
 	}
 	
+	/**
+	 * Gets the project tasks.
+	 *
+	 * @param projectId the project id
+	 * @return the project tasks
+	 */
 	@RequestMapping(value = "/getProjectTasks/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -73,6 +115,12 @@ public class ProjectController {
 		return projectDtoReponse;
 	}
 	
+	/**
+	 * Gets the completed.
+	 *
+	 * @param projectId the project id
+	 * @return the completed
+	 */
 	@RequestMapping(value = "/getcompleted/{projectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
@@ -81,6 +129,12 @@ public class ProjectController {
 		return projectDtoReponse;
 	}
 	
+	/**
+	 * Gets the project by P name.
+	 *
+	 * @param projectName the project name
+	 * @return the project by P name
+	 */
 	@RequestMapping(value = "/getprojectByPName/{projectName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)

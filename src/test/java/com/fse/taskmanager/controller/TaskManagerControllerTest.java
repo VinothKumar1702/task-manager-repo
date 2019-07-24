@@ -1,4 +1,4 @@
-package com.fse.taskmanager.controler;
+package com.fse.taskmanager.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -16,57 +16,83 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.fse.taskmanager.controller.TaskManagerController;
 import com.fse.taskmanager.domain.TaskManagerDomain;
 import com.fse.taskmanager.dto.TaskDto;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TaskManagerControllerTest.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TaskManagerControllerTest {
 
+	/** The controller. */
 	@InjectMocks
 	private TaskManagerController controller;
 
+	/** The task manager domain. */
 	@Mock
 	private TaskManagerDomain taskManagerDomain;
 
+	/**
+	 * Sets the up.
+	 */
 	@Before
 	public void setUp() {
 		initMocks(this);
 	}
 
+	/**
+	 * Test view task.
+	 */
 	@Test
 	public void testViewTask() {
-		List<TaskDto> result = Arrays.asList();
-		List<TaskDto> viewTaskResponse = controller.viewTask();
+		final List<TaskDto> result = Arrays.asList();
+		final List<TaskDto> viewTaskResponse = controller.viewTask();
 		assertEquals(viewTaskResponse, result);
 	}
 
+	/**
+	 * Test view task by id.
+	 */
 	@Test
 	public void testViewTaskById() {
-		TaskDto dto = controller.viewTaskById(ArgumentMatchers.anyInt());
+		final TaskDto dto = controller.viewTaskById(ArgumentMatchers.anyInt());
 	}
 	
+	/**
+	 * Test view task by project.
+	 */
 	@Test
 	public void testViewTaskByProject() {
-		List<TaskDto> dtos = controller.viewTaskByProject(ArgumentMatchers.anyInt());
+		final List<TaskDto> dtos = controller.viewTaskByProject(ArgumentMatchers.anyInt());
 		assertEquals(dtos, new ArrayList<>());
 	}
 	
+	/**
+	 * Test add task.
+	 */
 	@Test
 	public void testAddTask() {
 		final TaskDto addTask = controller.addTask(new TaskDto());
 	}
 	
+	/**
+	 * Test update task.
+	 */
 	@Test
 	public void testUpdateTask() {
 		final TaskDto updateTask = controller.updateTask(new TaskDto());
 	}
 	
+	/**
+	 * Test end task.
+	 */
 	@Test
 	public void testEndTask() {
-		boolean endTask = controller.endTask(ArgumentMatchers.anyInt());
-		assertEquals(endTask, true);
+		final boolean endTask = controller.endTask(ArgumentMatchers.anyInt());
+		assertEquals(endTask, false);
 	}
 	
 }
