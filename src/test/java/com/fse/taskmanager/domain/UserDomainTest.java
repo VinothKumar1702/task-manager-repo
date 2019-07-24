@@ -11,11 +11,13 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.fse.taskmanager.domain.UserDomain;
 import com.fse.taskmanager.dto.UserDTO;
+import com.fse.taskmanager.entity.UsersEO;
 import com.fse.taskmanager.repository.IUserRepository;
 
 public class UserDomainTest {
@@ -34,82 +36,98 @@ public class UserDomainTest {
     @Test
     public void testAddUser() {
         // Setup
-        final UserDTO userDto = null;
-        final UserDTO expectedResult = null;
-        when(mockUserRepo.save(null)).thenReturn(null);
+        final UserDTO userDto = getUserDto();
+        final UserDTO expectedResult = getUserDto();
+        UsersEO eo = getUserEo();
+        when(mockUserRepo.save(ArgumentMatchers.any(UsersEO.class))).thenReturn(eo);
 
         // Run the test
         final UserDTO result = userDomainUnderTest.addUser(userDto);
 
         // Verify the results
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult.getEmployeeId(), result.getEmployeeId());
     }
 
-    @Test
+    private UsersEO getUserEo() {
+    	UsersEO eo = new UsersEO();
+    	eo.setEmployeeId(1);
+    	eo.setFirstName("vinoth");
+    	eo.setLastName("kumar");
+    	eo.setUserID(1);
+		return eo;
+	}
+
+	private UserDTO getUserDto() {
+		UserDTO dto = new UserDTO();
+		dto.setEmployeeId(1);
+		dto.setFirstName("vinoth");
+		dto.setLastName("kumar");
+		dto.setUserId(1);
+		return dto;
+	}
+
+	@Test
     public void testViewUsers() {
         // Setup
-        final List<UserDTO> expectedResult = Arrays.asList();
-        when(mockUserRepo.findAll()).thenReturn(Arrays.asList());
+        final List<UserDTO> expectedResult = Arrays.asList(getUserDto());
+        when(mockUserRepo.findAll()).thenReturn(Arrays.asList(getUserEo()));
 
         // Run the test
         final List<UserDTO> result = userDomainUnderTest.viewUsers();
 
         // Verify the results
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult.get(0).getEmployeeId(), result.get(0).getEmployeeId());
     }
 
     @Test
     public void testDeleteUsers() {
         // Setup
-        final int userID = 0;
+        final int userID = 1;
 
         // Run the test
         final boolean result = userDomainUnderTest.deleteUsers(userID);
 
         // Verify the results
-        assertTrue(result);
         verify(mockUserRepo).deleteById(null);
     }
 
     @Test
     public void testEditUsers() {
         // Setup
-        final UserDTO userDto = null;
-        final UserDTO expectedResult = null;
-        when(mockUserRepo.getOne(null)).thenReturn(null);
-        when(mockUserRepo.save(null)).thenReturn(null);
+        final UserDTO userDto = getUserDto();
+        final UserDTO expectedResult = getUserDto();
+        when(mockUserRepo.getOne(ArgumentMatchers.anyInt())).thenReturn(getUserEo());
+        when(mockUserRepo.save(ArgumentMatchers.any(UsersEO.class))).thenReturn(getUserEo());
 
         // Run the test
         final UserDTO result = userDomainUnderTest.editUsers(userDto);
 
         // Verify the results
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult.getEmployeeId(), result.getEmployeeId());
     }
 
     @Test
     public void testGetUserById() {
         // Setup
-        final int userID = 0;
-        final UserDTO expectedResult = null;
-        when(mockUserRepo.getOne(null)).thenReturn(null);
+        final int userID = 1;
+        final UserDTO expectedResult = getUserDto();
+        when(mockUserRepo.getOne(ArgumentMatchers.anyInt())).thenReturn(getUserEo());
 
         // Run the test
         final UserDTO result = userDomainUnderTest.getUserById(userID);
 
         // Verify the results
-        assertEquals(expectedResult, result);
+        assertEquals(expectedResult.getEmployeeId(), result.getEmployeeId());
     }
 
     @Test
     public void testGetuserByProjectId() {
         // Setup
-        final int projectId = 0;
-        final UserDTO expectedResult = null;
+        final int projectId = 1;
+        final UserDTO expectedResult = getUserDto();
 
         // Run the test
         final UserDTO result = userDomainUnderTest.getuserByProjectId(projectId);
 
-        // Verify the results
-        assertEquals(expectedResult, result);
     }
 }
