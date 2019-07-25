@@ -9,22 +9,16 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fse.taskmanager.domain.TaskManagerDomain;
 import com.fse.taskmanager.dto.TaskDto;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TaskManagerControllerTest.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TaskManagerControllerTest {
 
 	/** The controller. */

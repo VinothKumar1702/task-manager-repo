@@ -1,10 +1,8 @@
 package com.fse.taskmanager.domain;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,32 +13,41 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.fse.taskmanager.domain.ParentTaskDomain;
 import com.fse.taskmanager.dto.ParentTaskDto;
 import com.fse.taskmanager.entity.ParentTaskEO;
 import com.fse.taskmanager.repository.IParentTaskRepository;
-
+/**
+ * The Class ParentTaskDomainTest.
+ */
 public class ParentTaskDomainTest {
 
+    /** The mock parent task repo. */
     @Mock
     private IParentTaskRepository mockParentTaskRepo;
 
+    /** The parent task domain under test. */
     @InjectMocks
     private ParentTaskDomain parentTaskDomainUnderTest;
 
+    /**
+     * Sets the up.
+     */
     @Before
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test get parent tasks.
+     */
     @Test
     public void testGetParentTasks() {
         // Setup
-    	ParentTaskDto dto = new ParentTaskDto();
+    	final ParentTaskDto dto = new ParentTaskDto();
     	dto.setParentId(1);
     	dto.setParentTask("Parent");
         final List<ParentTaskDto> expectedResult = Arrays.asList(dto);
-        ParentTaskEO eo1 = new ParentTaskEO();
+        final ParentTaskEO eo1 = new ParentTaskEO();
         eo1.setParentId(1);
         eo1.setParentTask("Parent");
         when(mockParentTaskRepo.findAll()).thenReturn(Arrays.asList(eo1));
@@ -52,6 +59,9 @@ public class ParentTaskDomainTest {
         Assert.assertEquals(expectedResult.get(0).getParentTask(), result.get(0).getParentTask());
     }
 
+    /**
+     * Test get parent task by id.
+     */
     @Test
     public void testGetParentTaskById() {
         // Setup

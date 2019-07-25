@@ -16,7 +16,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import com.fse.taskmanager.domain.ProjectDomain;
 import com.fse.taskmanager.dto.ProjectDto;
 import com.fse.taskmanager.entity.ProjectEO;
 import com.fse.taskmanager.entity.UsersEO;
@@ -24,28 +23,43 @@ import com.fse.taskmanager.repository.IProjectRepository;
 import com.fse.taskmanager.repository.ITaskRepositroy;
 import com.fse.taskmanager.repository.IUserRepository;
 
+/**
+ * The Class ProjectDomainTest.
+ */
 public class ProjectDomainTest {
 
+    /** The mock project repo. */
     @Mock
     private IProjectRepository mockProjectRepo;
+    
+    /** The mock user repo. */
     @Mock
     private IUserRepository mockUserRepo;
+    
+    /** The mock task repo. */
     @Mock
     private ITaskRepositroy mockTaskRepo;
 
+    /** The project domain under test. */
     @InjectMocks
     private ProjectDomain projectDomainUnderTest;
 
+    /**
+     * Sets the up.
+     */
     @Before
     public void setUp() {
         initMocks(this);
     }
 
+    /**
+     * Test view projects.
+     */
     @Test
     public void testViewProjects() {
         // Setup
         final List<ProjectDto> expectedResult = getProjects();
-        List<ProjectEO> listEo = getProjectEo();
+        final List<ProjectEO> listEo = getProjectEo();
         when(mockProjectRepo.findAll()).thenReturn(listEo);
         when(mockTaskRepo.findProjects(0)).thenReturn(Arrays.asList());
         when(mockTaskRepo.getcompletedProjects(0)).thenReturn(Arrays.asList());
@@ -57,19 +71,29 @@ public class ProjectDomainTest {
         assertEquals(expectedResult.get(0).getProject(), result.get(0).getProject());
     }
 
+    /**
+     * Gets the project eo.
+     *
+     * @return the project eo
+     */
     private List<ProjectEO> getProjectEo() {
-    	ProjectEO eo = projectEO();
+    	final ProjectEO eo = projectEO();
 		return Arrays.asList(eo);
 	}
 
+	/**
+	 * Project EO.
+	 *
+	 * @return the project EO
+	 */
 	private ProjectEO projectEO() {
-		ProjectEO eo = new ProjectEO();
+		final ProjectEO eo = new ProjectEO();
     	eo.setEndDate(new Date());
     	eo.setPriority(1);
     	eo.setProjectName("Project");
     	eo.setProjectId(1);
     	eo.setStartDate(new Date());
-    	UsersEO usereo = new UsersEO();
+    	final UsersEO usereo = new UsersEO();
     	usereo.setUserID(1);
     	usereo.setEmployeeId(12);
     	usereo.setFirstName("vinoth");
@@ -78,13 +102,23 @@ public class ProjectDomainTest {
 		return eo;
 	}
 
+	/**
+	 * Gets the projects.
+	 *
+	 * @return the projects
+	 */
 	private List<ProjectDto> getProjects() {
-    	ProjectDto dto = projectDto();
+    	final ProjectDto dto = projectDto();
 		return Arrays.asList(dto);
 	}
 
+	/**
+	 * Project dto.
+	 *
+	 * @return the project dto
+	 */
 	private ProjectDto projectDto() {
-		ProjectDto dto = new ProjectDto();
+		final ProjectDto dto = new ProjectDto();
 		dto.setCompleted(1);
     	dto.setEndDate(new Date());
     	dto.setManager("Vinoth");
@@ -97,12 +131,15 @@ public class ProjectDomainTest {
 		return dto;
 	}
 
+	/**
+	 * Test update project.
+	 */
 	@Test
     public void testUpdateProject() {
         // Setup
         final ProjectDto projectDto = projectDto();
         final ProjectDto expectedResult = projectDto();
-        ProjectEO eo = projectEO();
+        final ProjectEO eo = projectEO();
         when(mockProjectRepo.getOne(1)).thenReturn(eo);
         when(mockUserRepo.getOne(null)).thenReturn(null);
         when(mockProjectRepo.save(null)).thenReturn(null);
@@ -114,6 +151,9 @@ public class ProjectDomainTest {
         assertEquals(expectedResult.getProject(), result.getProject());
     }
 
+    /**
+     * Test delete project.
+     */
     @Test
     public void testDeleteProject() {
         // Setup
@@ -127,12 +167,15 @@ public class ProjectDomainTest {
         verify(mockProjectRepo).deleteById(1);
     }
 
+    /**
+     * Test add project.
+     */
     @Test
     public void testAddProject() {
         // Setup
         final ProjectDto projectDto = projectDto();
         final ProjectDto expectedResult = projectDto();
-        ProjectEO eo = projectEO();
+        final ProjectEO eo = projectEO();
         when(mockUserRepo.getOne(ArgumentMatchers.anyInt())).thenReturn(new UsersEO());
         when(mockProjectRepo.save(eo)).thenReturn(eo);
 
@@ -143,12 +186,15 @@ public class ProjectDomainTest {
         assertEquals(expectedResult.getProject(), result.getProject());
     }
 
+    /**
+     * Test get project 1.
+     */
     @Test
     public void testGetProject1() {
         // Setup
         final int projectId = 1;
         final ProjectDto expectedResult = projectDto();
-        ProjectEO eo = projectEO();
+        final ProjectEO eo = projectEO();
         when(mockProjectRepo.getOne(ArgumentMatchers.anyInt())).thenReturn(eo);
 
         // Run the test
@@ -158,6 +204,9 @@ public class ProjectDomainTest {
         assertEquals(expectedResult.getProject(), result.getProject());
     }
 
+    /**
+     * Test get project tasks.
+     */
     @Test
     public void testGetProjectTasks() {
         // Setup
@@ -172,6 +221,9 @@ public class ProjectDomainTest {
         assertEquals(expectedResult, result);
     }
 
+    /**
+     * Test getcompleted.
+     */
     @Test
     public void testGetcompleted() {
         // Setup
@@ -186,6 +238,9 @@ public class ProjectDomainTest {
         assertEquals(expectedResult, result);
     }
 
+    /**
+     * Test get project by P name.
+     */
     @Test
     public void testGetProjectByPName() {
         // Setup

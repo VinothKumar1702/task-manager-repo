@@ -1,14 +1,14 @@
 package com.fse.taskmanager.controller;
 
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fse.taskmanager.domain.IUserDomain;
 import com.fse.taskmanager.dto.UserDTO;
@@ -16,8 +16,6 @@ import com.fse.taskmanager.dto.UserDTO;
 /**
  * The Class UserControllerTest.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class UserControllerTest {
 	
 	/** The user domain. */
@@ -28,6 +26,13 @@ public class UserControllerTest {
 	@InjectMocks
 	private UsersController controller;
 	
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		initMocks(this);
+	}
 	/**
 	 * Test get users.
 	 */
