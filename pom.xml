@@ -12,7 +12,7 @@
 	<artifactId>taskmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>taskmanager</name>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<description>Single Page Application on Task Manager</description>
 
 	<properties>
