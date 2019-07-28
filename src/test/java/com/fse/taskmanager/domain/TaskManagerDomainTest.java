@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -116,8 +117,8 @@ public class TaskManagerDomainTest {
 	private TaskDto getTaskDto() {
 		final TaskDto dto = new TaskDto();
 		dto.setCompleted("COMPLETED");
-		dto.setEndDate(new Date());
-		dto.setStartDate(new Date());
+		dto.setEndDate("2019-06-01");
+		dto.setStartDate("2018-06-01");
 		dto.setParentId(1);
 		dto.setParentTask("Parent");
 		dto.setParentTaskFlag(false);

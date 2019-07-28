@@ -3,6 +3,8 @@
  */
 package com.fse.taskmanager.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,8 +81,15 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 				final TaskEO taskEo = new TaskEO();
 				taskEo.setTask(taskDto.getTask());
 				taskEo.setPriority(taskDto.getPriority());
-				taskEo.setStartDate(taskDto.getStartDate());
-				taskEo.setEndDate(taskDto.getEndDate());
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					taskEo.setStartDate(dateFormat.parse(taskDto.getStartDate()));
+					taskEo.setEndDate(dateFormat.parse(taskDto.getEndDate()));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				taskEo.setStatus("IN PROGRESS");
 				if (null != taskDto.getParentTask()) {
 					final ParentTaskEO parentTaskEo = parentTaskRepo.fetchParentTaskByName(taskDto.getParentTask().trim());
@@ -144,8 +153,13 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 			taskEo.setUser(userEo);
 		}
 		taskEo.setTask(task.getTask());
-		taskEo.setStartDate(task.getStartDate());
-		taskEo.setEndDate(task.getEndDate());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			taskEo.setStartDate(dateFormat.parse(task.getStartDate()));
+			taskEo.setEndDate(dateFormat.parse(task.getEndDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		taskEo.setPriority(task.getPriority());
 		taskEo.setStatus("IN PROGRESS");
 		taskRepo.save(taskEo);
@@ -173,8 +187,10 @@ public class TaskManagerDomain implements ITaskManagerDomain {
 	private void setTaskDetails(TaskEO task, TaskDto taskDto) {
 		taskDto.setTaskId(task.getTaskId());
 		taskDto.setTask(task.getTask());
-		taskDto.setStartDate(task.getStartDate());
-		taskDto.setEndDate(task.getEndDate());
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		taskDto.setStartDate(simpleDateFormat.format(task.getStartDate()));
+		taskDto.setEndDate(simpleDateFormat.format(task.getEndDate()));
 		taskDto.setPriority(task.getPriority());
 		taskDto.setCompleted(task.getStatus());
 		if (null != task.getParentTask()) {

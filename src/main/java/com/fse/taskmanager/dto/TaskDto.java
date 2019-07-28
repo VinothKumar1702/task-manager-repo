@@ -24,12 +24,12 @@ public class TaskDto {
 	private int priority;
 	
 	/** The start date. */
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date startDate;
+	//@JsonFormat(pattern="yyyy-MM-dd")
+	private String startDate;
 	
 	/** The end date. */
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date endDate;
+	//@JsonFormat(pattern="yyyy-MM-dd")
+	private String endDate;
 	
 	/** The completed. */
 	private String completed;
@@ -121,7 +121,7 @@ public class TaskDto {
 	 *
 	 * @return the start date
 	 */
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
@@ -130,7 +130,7 @@ public class TaskDto {
 	 *
 	 * @param startDate the new start date
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
@@ -139,7 +139,7 @@ public class TaskDto {
 	 *
 	 * @return the end date
 	 */
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
@@ -148,7 +148,7 @@ public class TaskDto {
 	 *
 	 * @param endDate the new end date
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
